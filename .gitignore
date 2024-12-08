@@ -1,0 +1,5 @@
+.terragrunt-cache/
+.terraform/
+terragrunt_rendered.json
+.terraform.lock.hcl
+.idea/
