@@ -113,11 +113,6 @@ inputs = {
           cloudwatch_log_group_retention_in_days = 7
           log_configuration = {
             logDriver = "awslogs"
-            #options = {
-            #  awslogs-group         = "/aws/ecs/apps/${local.env_vars.locals.name}"
-            #  awslogs-region        = "${local.env_vars.locals.region}"
-            #  awslogs-stream-prefix = "ecs"
-            #}
           }
         }
       }
