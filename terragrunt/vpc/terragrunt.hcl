@@ -16,7 +16,7 @@ inputs = {
 
   default_security_group_ingress = [{
     description = "Allow all internal TCP and UDP"
-    self        = true
+    cidr_blocks = "10.0.0.0/16"
   }]
 
   enable_nat_gateway = true

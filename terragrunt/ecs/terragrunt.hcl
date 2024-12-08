@@ -126,26 +126,8 @@ inputs = {
       }
 
       subnet_ids = dependency.vpc.outputs.private_subnets
-      create_security_group = true
-      #security_group_ids = [dependency.vpc.outputs.default_security_group_id]
-
-      security_group_rules = {
-        alb_ingress_5000 = {
-          type                     = "ingress"
-          from_port                = 5000
-          to_port                  = 5000
-          protocol                 = "tcp"
-          description              = "Allow ALB traffic to Flask service"
-          source_security_group_id = dependency.alb.outputs.security_group_id
-        }
-        egress_all = {
-          type        = "egress"
-          from_port   = 0
-          to_port     = 0
-          protocol    = "-1"
-          cidr_blocks = ["0.0.0.0/0"]
-        }
-      }
+      create_security_group = false
+      security_group_ids = [dependency.vpc.outputs.default_security_group_id]
 
       requires_compatibilities = ["EC2"]
       autoscaling_policies = {}
