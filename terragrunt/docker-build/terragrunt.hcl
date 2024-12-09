@@ -2,6 +2,11 @@ terraform {
   source = "../modules/docker-build"
 }
 
+dependency "ecr" {
+  config_path = "../ecr"
+  skip_outputs = true
+}
+
 inputs = {
   aws_region  = local.env_vars.locals.region
   account_id  = local.env_vars.locals.account_id
