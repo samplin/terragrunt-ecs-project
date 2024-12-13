@@ -15,8 +15,8 @@ inputs = {
   ecs_service_namespace = "ecs"
 
   name_prefix          = "${local.env_vars.locals.name}"
-  min_capacity         = 1
-  max_capacity         = 3
+  scale_target_max_capacity = 5
+  scale_target_min_capacity = 1
   max_cpu_threshold    = 50
   min_cpu_threshold    = 20
 
