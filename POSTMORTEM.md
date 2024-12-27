@@ -3,9 +3,9 @@
 ## Overview
 **Date and Time**: [YYYY-MM-DD HH:MM (Time Zone)]  
 **Duration**: [Total Duration of the Incident]  
-**Affected Systems/Services**: User's call sessions
-**Incident Owner(s)**: Sam Chen, Devops
-**Severity Level**: High
+**Affected Systems/Services**: User's call sessions 
+**Incident Owner(s)**: Sam Chen, Devops 
+**Severity Level**: High 
 
 ### Summary
 One of the two nodes that manage the user's incoming calls got hardware issue
@@ -14,13 +14,15 @@ One of the two nodes that manage the user's incoming calls got hardware issue
 
 ## Impact
 **Business Impact**:
-- Half of new incoming calls need retry to get connected
-- Most user session should be able to retry and got connected
-- No SLA breach
+- Half of new incoming calls need retry to get connected 
+- Most user session should be able to retry and got connected 
+- No SLA breach 
+- Company reputaion impact: minimal 
 
 **Technical Impact**:
 - As one of the instance was still able to handle all the call sessions, and running at 30~40% capacity,
   no performance impact observed, no downtime or data loss
+- May have some phone call loss
 
 ---
 
@@ -94,6 +96,7 @@ One of the two nodes that manage the user's incoming calls got hardware issue
 ## Metrics
 **Impact Metrics**:
 - **Users Affected**: 50%
+- **Calls dropped**: n/a
 - **Downtime**: 0
 - **Financial Impact**: 0
 
