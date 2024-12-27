@@ -1,88 +1,101 @@
-# Postmortem Report: [Incident Name]
+# Postmortem Report: Half user call reconnecting
 
 ## Overview
 **Date and Time**: [YYYY-MM-DD HH:MM (Time Zone)]  
 **Duration**: [Total Duration of the Incident]  
-**Affected Systems/Services**: [List of impacted systems/services]  
-**Incident Owner(s)**: [Name(s) of individual(s) or team responsible for managing the incident]  
-**Severity Level**: [Critical/High/Medium/Low]
+**Affected Systems/Services**: User's call sessions
+**Incident Owner(s)**: Sam Chen, Devops
+**Severity Level**: High
 
 ### Summary
-[Provide a high-level summary of the incident. Include what happened, the impact, and how it was resolved in 2-3 sentences.]
+One of the two nodes that manage the user's incoming calls got hardware issue
 
 ---
 
 ## Impact
 **Business Impact**:
-- Quantify the impact, such as financial loss, user impact
-- SLA breach
+- Half of new incoming calls need retry to get connected
+- Most user session should be able to retry and got connected
+- No SLA breach
 
 **Technical Impact**:
-- [Describe the technical ramifications, such as downtime, performance issues, or data inconsistencies.]
+- As one of the instance was still able to handle all the call sessions, and running at 30~40% capacity,
+  no performance impact observed, no downtime or data loss
 
 ---
 
 ## Timeline
-| Time (UTC) | Event Description                                    |
-|------------|-----------------------------------------------------|
-| HH:MM      | [When the issue started]                            |
-| HH:MM      | [When the issue was detected]                       |
-| HH:MM      | [Key actions taken to mitigate the issue]           |
-| HH:MM      | [When the issue was fully resolved]                 |
+| Time (UTC) | Event Description                                                        |
+|------------|--------------------------------------------------------------------------|
+| HH:MM      | Got some alerts regarding one of the hosts have no connection            |
+| HH:MM      | Check the host health check, cpu, memory and disk spaces,  all look good |
+| HH:MM      | Check the host log, got cuda error messages                              |
+| HH:MM      | take the bad host from health check, all new calls go to working host    |
+| HH:MM      | launch a new ec2 host, and provision the services to replace bad host    | 
+| HH:MM      | the issue was fully resolved                                             |
 
 ---
 
 ## Root Cause Analysis
 **Root Cause**:  
-[Provide a detailed explanation of the root cause, including contributing factors.]
+- one of the host got hardware issue, but health check still working fine, health check was not able to reflect the service status
 
 **Contributing Factors**:
-- [List any systemic issues or gaps that allowed this incident to occur.]
+- health check was not able to reflect the service status
+- system logs were not monitored
 
 ---
 
 ## Response and Resolution
 1. **Detection**:
-   - [How the issue was detected (e.g., monitoring alert, user reports).]
+   - monitoring alerts showed hosts connection loosing balance, one host has no connections but other has many
 2. **Escalation**:
-   - [Who was involved and how the issue was escalated.]
+   - Engineering manager
 3. **Mitigation**:
-   - [Steps taken to reduce impact (e.g., rollbacks, patching).]
+   - add monitoring for system logs
 4. **Resolution**:
-   - [Actions taken to resolve the issue.]
+   - manually failed health check to block connections come to bad host
+   - replace the bad host and install services
+   - enhance the health check to reflect the service status, not host status
 
 ---
 
 ## Lessons Learned
 **What Worked Well**:
-- [List things that were effective, such as monitoring systems, collaboration, etc.]
+- monitoring regarding connection balancing worked well
+- devops team response was quick
+- automation on provision the new host worked well
 
 **What Didn’t Work**:
-- [Highlight gaps in process, tools, or communication.]
+- health check did not reflect service status
+- system log was not monitored
 
 ---
 
 ## Preventative Measures
 **Technical Improvements**:
-- [List technical solutions, e.g., code fixes, redundancy, automated testing.]
+- improve health check
+- add system log monitoring
+- add automation to auto provision new hosts if health check fails
 
 **Process Improvements**:
-- [List process-related solutions, e.g., improved deployment procedures, better documentation.]
+- Add automation to provision new hosts on host failure
+- Add log monitoring to existing alerts
 
 **Action Items**:
 | Action Item                                | Owner          | Deadline       |
 |-------------------------------------------|----------------|----------------|
-| [e.g., Implement automated tests]         | [Team/Person]  | [YYYY-MM-DD]   |
-| [e.g., Update monitoring configurations]  | [Team/Person]  | [YYYY-MM-DD]   |
-| [e.g., Conduct incident response training]| [Team/Person]  | [YYYY-MM-DD]   |
+| improve health check                      | [Team/Person]  | [YYYY-MM-DD]   |
+| add system log monitoring                 | [Team/Person]  | [YYYY-MM-DD]   |
+| auto provision new hosts on host failure  | [Team/Person]  | [YYYY-MM-DD]   |
 
 ---
 
 ## Metrics
 **Impact Metrics**:
-- **Users Affected**: [Number of users]
-- **Downtime**: [Duration of the incident]
-- **Financial Impact**: [If applicable]
+- **Users Affected**: 50%
+- **Downtime**: 0
+- **Financial Impact**: 0
 
 **Response Metrics**:
 - **Time to Detect**: [Duration from start to detection]
@@ -91,7 +104,7 @@
 ---
 
 ## Follow-Up
-[Describe how progress on preventative measures will be tracked and communicated.]
+follow up the above tickets on [YYYY-MM-DD]
 
 **Next Retrospective Review Date**: [YYYY-MM-DD]
 
