@@ -40,7 +40,8 @@ One of the two nodes that manage the user's incoming calls got hardware issue
 
 ## Root Cause Analysis
 **Root Cause**:  
-- one of the host got hardware issue, but health check still working fine, health check was not able to reflect the service status
+- one of the host got hardware issue, but health check still working fine, health check was not able to 
+  reflect the service status, thus not able to block the new calls from coming to the bad host
 
 **Contributing Factors**:
 - health check was not able to reflect the service status
