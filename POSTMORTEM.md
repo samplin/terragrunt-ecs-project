@@ -52,9 +52,11 @@ One of the two nodes that manage the user's incoming calls got hardware issue
 1. **Detection**:
    - monitoring alerts showed hosts connection loosing balance, one host has no connections but other has many
 2. **Escalation**:
-   - Engineering manager
+   - Engineering manager to provide resouce on working with the issue
+   - Customer Support manager to notify customers and make external communications
 3. **Mitigation**:
    - add monitoring for system logs
+   - add one more host to provide more redundancy as volume grows
 4. **Resolution**:
    - manually failed health check to block connections come to bad host
    - replace the bad host and install services
@@ -83,13 +85,15 @@ One of the two nodes that manage the user's incoming calls got hardware issue
 **Process Improvements**:
 - Add automation to provision new hosts on host failure
 - Add log monitoring to existing alerts
+- Enable/Disable a hot standby(redundant) host
 
 **Action Items**:
-| Action Item                                | Owner          | Deadline       |
-|-------------------------------------------|----------------|----------------|
-| improve health check                      | [Team/Person]  | [YYYY-MM-DD]   |
-| add system log monitoring                 | [Team/Person]  | [YYYY-MM-DD]   |
-| auto provision new hosts on host failure  | [Team/Person]  | [YYYY-MM-DD]   |
+| Action Item                                       | Owner          | Deadline       |
+|---------------------------------------------------|----------------|----------------|
+| improve health check                              | [Team/Person]  | [YYYY-MM-DD]   |
+| add system log monitoring                         | [Team/Person]  | [YYYY-MM-DD]   |
+| auto provision new hosts on host failure          | [Team/Person]  | [YYYY-MM-DD]   |
+| add one a hot standby host to provide redundancy  | [Team/Person]  | [YYYY-MM-DD]   |
 
 ---
 
@@ -99,6 +103,7 @@ One of the two nodes that manage the user's incoming calls got hardware issue
 - **Calls dropped**: n/a
 - **Downtime**: 0
 - **Financial Impact**: 0
+- **Future Financial Impact**: increase by 20% when adding a smaller hot standby host for redundancy
 
 **Response Metrics**:
 - **Time to Detect**: [Duration from start to detection]
